@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import loginImg from "../../assets/images/login/login.svg";
 import { FaFacebook } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
@@ -8,6 +8,9 @@ import { authContext } from "../Provider/AuthProvider";
 import Nav from "../Home/Nav/Nav";
 const SignIn = () => {
    const { login, handleGoogle } = useContext(authContext);
+   const location = useLocation();
+   // console.log(location);
+   const navigate = useNavigate()
    const handleSignInFrom = (e) => {
       e.preventDefault();
       const form = e.target;
@@ -18,6 +21,7 @@ const SignIn = () => {
       login(email, password)
          .then((result) => {
             console.log(result.user);
+            navigate(location?.state ? location?.state : '/')
          })
          .catch((error) => {
             console.log(error);

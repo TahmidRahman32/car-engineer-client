@@ -1,9 +1,12 @@
 import { useContext } from "react";
 import { authContext } from "../../pages/Provider/AuthProvider";
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 
 const PrivateRoute = ({ children }) => {
    const { users, loading } = useContext(authContext);
+
+   const location = useLocation();
+   // console.log(location.pathname);
    if(loading){
       return (
          <div className="text-center mt-36">
@@ -18,7 +21,7 @@ const PrivateRoute = ({ children }) => {
    if(users?.email){
       return children;
    }
-   return <Navigate to={'/signIn'} replace></Navigate> ;
+   return <Navigate state={location.pathname} to={"/signIn"} replace></Navigate>;
 };
 
 export default PrivateRoute;
